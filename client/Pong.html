@@ -1,0 +1,19 @@
+<html>
+<head>
+	<script type="text/javascript">
+		var global = {}; // For node.js require
+	</script>
+	<!-- Loading the scriptLoader.js, for obvious reasons...-->
+	<script type="text/javascript" src="../lib/scriptLoader.js"></script>
+	<!-- We need to load this here because Pong.js has values which PongClient.js uses-->
+	<script type="text/javascript" src="../lib/Pong.js"></script>
+</head>
+<body onload="loadScript('', 'PongClient.js')">
+	<p>
+		WELCOME TO 2-PLAYER PONG!<br />
+		Click the game area to play.
+	</p>
+	<canvas id ="playArea"></canvas>
+	<p id="serverMsg"></p>
+</body>
+</html>
