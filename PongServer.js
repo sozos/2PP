@@ -20,7 +20,7 @@ function PongServer() {
     var port;                       // Game port [Private]
     var count;                      // Keeps track how many people are connected to server [Private]
     var nextPID;                    // PID to assign to next connected player (i.e. which player slot is open) [Private]
-    var gameInterval = undefined;   // Interval variable used for gameCycle [Private]
+    var gameInterval = undefined;   // Interval variable used for gameLoop [Private]
     var ball;                       // the game ball [Private]
     var players;                    // Associative array for players, indexed via sid [Private]
                                     // To get a Player object, do "players[sid]"
@@ -48,9 +48,9 @@ function PongServer() {
     }
 
     /*===================
-      gameCycle [Private]
+      gameLoop [Private]
       ===================*/
-    var gameCycle = function() {
+    var gameLoop = function() {
         // Check if ball is moving
         if (ball.isMoving()) {
             // Grab players
@@ -169,7 +169,7 @@ function PongServer() {
                             } else {
                                 console.log("Let the games begin!");
                                 ball.startMoving();
-                                gameInterval = setInterval(function() {gameCycle();}, 1000/Pong.FRAME_RATE);
+                                gameInterval = setInterval(function() {gameLoop();}, 1000/Pong.FRAME_RATE);
                             }
                         });
 
