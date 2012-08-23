@@ -4,8 +4,8 @@
 var Pong = {
 	HEIGHT : 500,				// height of Pong game window
 	WIDTH : 500,				// width of Pong game window
-	PORT : 80,					// port of Pong game
-	FRAME_RATE : 25,			// frame rate of Pong game
+	PORT : 8000,				// port of Pong game
+	FRAME_RATE : 50,			// frame rate of Pong game
 	SERVER_NAME : "localhost"	// server name of Pong game
 }
 
