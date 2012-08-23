@@ -14,8 +14,8 @@ function PongClient() {
 	  =================*/
 	var display = function(location, msg) {
 		// Adds the msg ON TOP of all the previous messages
-		var temp = document.getElementById(location).innerHTML;
-		document.getElementById(location).innerHTML = msg + "<br />" + temp;
+		var prev_msgs = document.getElementById(location).innerHTML;
+		document.getElementById(location).innerHTML = msg + "<br />" + prev_msgs;
 	}
 
 	/*=====================
@@ -32,7 +32,7 @@ function PongClient() {
 
 			// Upon connecting to server
 			socket.on("connect", function () {
-				console.log("Connected to gameServer");
+				console.log("Connected to game server");
 			});
 
 			// Upon disconnecting from server
@@ -95,7 +95,7 @@ function PongClient() {
 		var new_mouseX = e.pageX - canvasMinX;
 		var new_mouseY = e.pageY - canvasMinY;
 
-		// Send signal to server
+		// Send event to server
 		socket.emit("move", {x: new_mouseX, y: new_mouseY});
 	}
 
@@ -104,7 +104,7 @@ function PongClient() {
 	  ====================================*/
 	var onMouseClick = function(e) {
 		if (!ball.isMoving()) {
-			//Send signal to server
+			//Send event to server
 			socket.emit("start", {});
 		}
 		// else, do nothing. It's already playing!
@@ -124,7 +124,7 @@ function PongClient() {
 		switch(e.keyCode) {
 			case 38: { // Up
 				delay += 50;
-				// Send signal to server
+				// Send event to server
 				socket.emit("delay", {delay: delay});
 				console.log("New delay: " + delay);
 				break;
@@ -132,7 +132,7 @@ function PongClient() {
 			case 40: { // Down
 				if (delay >= 50) {
 					delay -= 50;
-					// Send signal to server
+					// Send event to server
 					socket.emit("delay", {delay: delay});
 					console.log("New delay: " + delay);
 				}
@@ -154,9 +154,9 @@ function PongClient() {
 	}
 
 	/*===================
-	  gameCycle [Private]
+	  render [Private]
 	  ===================*/
-	var gameCycle = function() {
+	var render = function() {
 		// Get context
 		var context = playArea.getContext("2d");
 
@@ -187,7 +187,7 @@ function PongClient() {
 		initGUI();
 
 		// Start gameCycle
-		setInterval(function() {gameCycle();}, 1000/Pong.FRAME_RATE);
+		setInterval(function() {render();}, 1000/Pong.FRAME_RATE);
 	}
 }
 
@@ -201,6 +201,6 @@ loadScript(lib_path, "Ball.js");
 loadScript(lib_path, "Paddle.js");
 loadScript("", "http://" + Pong.SERVER_NAME + ":" + Pong.PORT + "/socket.io/socket.io.js");
 
-// Run Client. Give leeway of 0.1second for libraries to load
+// Run Client. Give leeway of 0.1 second for libraries to load
 var client = new PongClient();
 setTimeout(function() {client.start();}, 1000);
