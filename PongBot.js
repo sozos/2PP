@@ -69,31 +69,12 @@ function PongClient() {
 		playArea.height = Pong.HEIGHT;
 		playArea.width = Pong.WIDTH;
 
-		// Add event handlers
-		playArea.addEventListener("mousemove", function(e) {
-			onMouseMove(e);
-			}, false);
 		playArea.addEventListener("click", function(e) {
 			onMouseClick(e);
 			}, false);
 		document.addEventListener("keydown", function(e) {
 			onKeyPress(e);
 			}, false);
-	}
-
-	/*===================================
-	  onMouseMove [Private Event Handler]
-	  ===================================*/
-	var onMouseMove = function(e) {
-		var canvasMinX = playArea.offsetLeft;
-		var canvasMaxX = canvasMinX + playArea.width;
-		var canvasMinY = playArea.offsetTop;
-		var canvasMaxY = canvasMinX + playArea.height;
-		var new_mouseX = e.pageX - canvasMinX;
-		var new_mouseY = e.pageY - canvasMinY;
-
-		// Send event to server
-		socket.emit("move", {x: new_mouseX});
 	}
 
 	/*====================================
@@ -148,6 +129,7 @@ function PongClient() {
 		myPaddle.y = myPaddleY;
 		opponentPaddle.x = opponentPaddleX;
 		opponentPaddle.y = opponentPaddleY;
+		socket.emit("move", {x: ballX});
 	}
 
 	/*===================
@@ -170,16 +152,16 @@ function PongClient() {
 		context.arc(ball.x, ball.y, Ball.WIDTH, 0, Math.PI*2, true);
 		context.closePath();
 		context.fill();
-		//context.drawImage(Sprites.ball[0], ball.x - Ball.WIDTH/2, ball.y - Ball.HEIGHT/2, Ball.WIDTH, Ball.HEIGHT);
-
 		context.fillStyle = "#ffff00";
+		
+		// Draw the paddle
 		context.fillRect(myPaddle.x - Paddle.WIDTH/2, 
 						myPaddle.y - Paddle.HEIGHT/2,
 						Paddle.WIDTH, Paddle.HEIGHT);
 		context.fillRect(opponentPaddle.x - Paddle.WIDTH/2, 
 						opponentPaddle.y - Paddle.HEIGHT/2,
 						Paddle.WIDTH, Paddle.HEIGHT);
-
+		//context.drawImage(Sprites.ball[0], ball.x - Ball.WIDTH/2, ball.y - Ball.HEIGHT/2, Ball.WIDTH, Ball.HEIGHT);
 		//context.drawImage(Sprites.paddle[0], myPaddle.x - Paddle.WIDTH/2, myPaddle.y - Paddle.HEIGHT/2, Paddle.WIDTH, Paddle.HEIGHT);
 		//context.drawImage(Sprites.paddle[0], opponentPaddle.x - Paddle.WIDTH/2, opponentPaddle.y - Paddle.HEIGHT/2, Paddle.WIDTH, Paddle.HEIGHT);
 	}
