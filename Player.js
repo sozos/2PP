@@ -14,6 +14,17 @@ function Player(sid, pid, yPos) {
     this.pid = pid;
     this.paddle = new Paddle(yPos);
     this.delay = 0;
+
+    this.getDelay = function() {
+		var errorPercentage = 20;
+	    var to = this.delay + this.delay/errorPercentage;
+	    var from = this.delay - this.delay/errorPercentage;
+		if (this.delay != 0) {
+				return this.delay + Math.floor(Math.random() * (to - from + 1) + from);
+		}
+		else 
+				return 0
+	}
 }
 
 // For node.js require
