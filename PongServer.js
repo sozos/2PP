@@ -69,7 +69,7 @@ function PongServer() {
 					opponentPaddleX: p2.paddle.x,
 					opponentPaddleY: p2.paddle.y});
 					},
-					p1.delay);
+					p1.getDelay());
 			setTimeout(function() {
 				io.sockets.socket(p2.sid).emit('update', {
 					ballX: ball.x,
@@ -79,8 +79,7 @@ function PongServer() {
 					opponentPaddleX: p1.paddle.x,
 					opponentPaddleY: p1.paddle.y});
 					},
-					p2.delay);
-			counter++;
+					p2.getDelay());
 		} else {
 			// Reset
 			resetGame();
@@ -94,7 +93,11 @@ function PongServer() {
 		try {
 			// Initialization
 			port = Pong.PORT;
-			io = require('socket.io').listen(port);
+			
+			// change log level to 3 for debugging messages
+			io = require('socket.io').listen(port, {
+					'log level':2 
+			});
 
 			count = 0;
 			nextPID = 1;
@@ -179,13 +182,12 @@ function PongServer() {
 						setTimeout(function() {
 							players[socket.id].paddle.move(data.x);
 						},
-						players[socket.id].delay);
+						players[socket.id].getDelay());
 					});
 
 				// Upon receiving a message tagged with "delay", along with an obj "data"
 				socket.on('delay',
 					function(data) {
-						console.log(data.delay);
 						players[socket.id].delay = data.delay;
 					});
 			});
