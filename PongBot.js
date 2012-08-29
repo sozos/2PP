@@ -14,8 +14,16 @@ function PongClient() {
 	  =================*/
 	var display = function(location, msg) {
 		// Adds the msg ON TOP of all the previous messages
+		document.getElementById(location).innerHTML = msg; 
+	}
+
+	/*=================
+	  appendLog [Private]
+	  =================*/
+	var appendLog = function(location, msg) {
+		// Adds the msg ON TOP of all the previous messages
 		var prev_msgs = document.getElementById(location).innerHTML;
-		document.getElementById(location).innerHTML = msg + "<br />" + prev_msgs;
+		document.getElementById(location).innerHTML = "[" + new Date().toString() + "] " + msg + "<br />" + prev_msgs;
 	}
 
 	/*=====================
@@ -39,14 +47,14 @@ function PongClient() {
 				console.log("You have disconnected from game server.");
 
 				// Display information on HTML page
-				display("serverMsg", "You have disconnected from game server");
+				appendLog("serverMsg", "You have disconnected from game server");
 			});
 			
 			// Upon receiving a message tagged with "serverMsg", along with an obj "data"
 			socket.on("serverMsg", function(data) {
 				// for debugging.  Uncomment to display messages.
 				// console.log(data.msg);
-				display("serverMsg", data.msg);
+				appendLog("serverMsg", data.msg);
 			});
 
 			// Upon receiving a message tagged with "update", along with an obj "data"
@@ -104,7 +112,7 @@ function PongClient() {
 				delay += 50;
 				// Send event to server
 				socket.emit("delay", {delay: delay});
-				console.log("New delay: " + delay);
+				display("delay", "Delay to Server: " + delay + " ms");
 				break;
 			}
 			case 40: { // Down
@@ -112,7 +120,7 @@ function PongClient() {
 					delay -= 50;
 					// Send event to server
 					socket.emit("delay", {delay: delay});
-					console.log("New delay: " + delay);
+					display("delay", "Delay to Server: " + delay + " ms");
 				}
 				break;
 			}
