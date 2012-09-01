@@ -20,26 +20,6 @@ function Ball() {
 	this.y = Pong.HEIGHT/2;
 
 	/*========================
-	  updateVelocity [Private]
-	  =======================*/
-	var updateVelocity = function(px) {
-		// Change direction (vx) depending on collision point between ball and paddle
-		if (that.x >= px - Paddle.R1 && that.x <= px + Paddle.R1) {
-            vy = -vy;
-        } else if (that.x >= px - Paddle.R2 && that.x <= px + Paddle.R2) {
-            vx += (that.x > px? 1 : -1);
-            vy = -vy;
-        } else if (that.x >= px - Paddle.R3 && that.x <= px + Paddle.R3) {
-            vx += (that.x > px? 2 : -2);
-            vy = -vy;
-        } else if (that.x + Ball.WIDTH/2 >= px - Paddle.WIDTH/2 && that.x - Ball.WIDTH/2 <= px + Paddle.WIDTH/2) {
-            vx += (that.x > px? 3 : -3);
-            vy = -vy;
-        }
-        // else = ball didn't collide with paddle
-	}
-
-	/*========================
 	  startMoving [Privileged]
 	  ========================*/
 	this.startMoving = function(){
@@ -81,6 +61,26 @@ function Ball() {
 			// Chance for ball to collide with bottom paddle.
 			updateVelocity(bottomPaddle.x);
 		}
+	}
+
+	/*========================
+	  updateVelocity [Private]
+	  =======================*/
+	var updateVelocity = function(px) {
+		// Change direction (vx) depending on collision point between ball and paddle
+		if (that.x >= px - Paddle.R1 && that.x <= px + Paddle.R1) {
+            vy = -vy;
+        } else if (that.x >= px - Paddle.R2 && that.x <= px + Paddle.R2) {
+            vx += (that.x > px? 1 : -1);
+            vy = -vy;
+        } else if (that.x >= px - Paddle.R3 && that.x <= px + Paddle.R3) {
+            vx += (that.x > px? 2 : -2);
+            vy = -vy;
+        } else if (that.x + Ball.WIDTH/2 >= px - Paddle.WIDTH/2 && that.x - Ball.WIDTH/2 <= px + Paddle.WIDTH/2) {
+            vx += (that.x > px? 3 : -3);
+            vy = -vy;
+        }
+        // else = ball didn't collide with paddle
 	}
 }
 

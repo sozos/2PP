@@ -137,6 +137,8 @@ function PongClient() {
 		myPaddle.y = myPaddleY;
 		opponentPaddle.x = opponentPaddleX;
 		opponentPaddle.y = opponentPaddleY;
+
+		// The "AI" part
 		socket.emit("move", {x: ballX});
 	}
 
@@ -169,9 +171,6 @@ function PongClient() {
 		context.fillRect(opponentPaddle.x - Paddle.WIDTH/2, 
 						opponentPaddle.y - Paddle.HEIGHT/2,
 						Paddle.WIDTH, Paddle.HEIGHT);
-		//context.drawImage(Sprites.ball[0], ball.x - Ball.WIDTH/2, ball.y - Ball.HEIGHT/2, Ball.WIDTH, Ball.HEIGHT);
-		//context.drawImage(Sprites.paddle[0], myPaddle.x - Paddle.WIDTH/2, myPaddle.y - Paddle.HEIGHT/2, Paddle.WIDTH, Paddle.HEIGHT);
-		//context.drawImage(Sprites.paddle[0], opponentPaddle.x - Paddle.WIDTH/2, opponentPaddle.y - Paddle.HEIGHT/2, Paddle.WIDTH, Paddle.HEIGHT);
 	}
 
 	/*==================

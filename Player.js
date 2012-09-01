@@ -5,7 +5,7 @@ function Player(sid, pid, yPos) {
 	this.sid;		// Socket id. Used to uniquely identify players via the socket they are connected from [Public]
     this.pid;		// Player id. In this case, 1 or 2 [Public]
     this.paddle;	// player's paddle object [Public]
-    this.delay;		// player's delay [Public]
+    var delay;		// player's delay [Private]
 
     /*===========
 	  Constructor
@@ -13,14 +13,18 @@ function Player(sid, pid, yPos) {
     this.sid = sid;
     this.pid = pid;
     this.paddle = new Paddle(yPos);
-    this.delay = 0;
+    var delay = 0;
+
+    this.setDelay = function(newDelay) {
+    	delay = newDelay;
+    }
 
     this.getDelay = function() {
 		var errorPercentage = 20;
-	    var to = this.delay + this.delay/errorPercentage;
-	    var from = this.delay - this.delay/errorPercentage;
-		if (this.delay != 0) {
-				return this.delay + Math.floor(Math.random() * (to - from + 1) + from);
+	    var to = delay + delay/errorPercentage;
+	    var from = delay - delay/errorPercentage;
+		if (delay != 0) {
+				return delay + Math.floor(Math.random() * (to - from + 1) + from);
 		}
 		else 
 				return 0

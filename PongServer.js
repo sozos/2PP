@@ -188,7 +188,7 @@ function PongServer() {
 				// Upon receiving a message tagged with "delay", along with an obj "data"
 				socket.on('delay',
 					function(data) {
-						players[socket.id].delay = data.delay;
+						players[socket.id].setDelay(data.delay);
 					});
 			});
 		} catch (e) {

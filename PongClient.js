@@ -171,8 +171,8 @@ function PongClient() {
 		context.arc(ball.x, ball.y, Ball.WIDTH, 0, Math.PI*2, true);
 		context.closePath();
 		context.fill();
-		//context.drawImage(Sprites.ball[0], ball.x - Ball.WIDTH/2, ball.y - Ball.HEIGHT/2, Ball.WIDTH, Ball.HEIGHT);
 
+		// Draw the paddle
 		context.fillStyle = "#ffff00";
 		context.fillRect(myPaddle.x - Paddle.WIDTH/2, 
 						myPaddle.y - Paddle.HEIGHT/2,
@@ -180,9 +180,6 @@ function PongClient() {
 		context.fillRect(opponentPaddle.x - Paddle.WIDTH/2, 
 						opponentPaddle.y - Paddle.HEIGHT/2,
 						Paddle.WIDTH, Paddle.HEIGHT);
-
-		//context.drawImage(Sprites.paddle[0], myPaddle.x - Paddle.WIDTH/2, myPaddle.y - Paddle.HEIGHT/2, Paddle.WIDTH, Paddle.HEIGHT);
-		//context.drawImage(Sprites.paddle[0], opponentPaddle.x - Paddle.WIDTH/2, opponentPaddle.y - Paddle.HEIGHT/2, Paddle.WIDTH, Paddle.HEIGHT);
 	}
 
 	/*==================
@@ -209,7 +206,6 @@ function PongClient() {
 
 // Load libraries
 var lib_path = "./";
-//loadScript(lib_path, "Sprites.js");
 loadScript(lib_path, "Ball.js");
 loadScript(lib_path, "Paddle.js");
 loadScript("", "http://" + Pong.SERVER_NAME + ":" + Pong.PORT + "/socket.io/socket.io.js");
