@@ -19,12 +19,18 @@ function Player(sid, pid, yPos) {
     	delay = newDelay;
     }
 
+    /*
+    	Return 0 if no delay
+    	Else, return a value between:
+    	delay * (1 - errorPercentage%) to delay * (1 + errorPercentage%)
+    	Note: Math.random() returns a value between 0 to 1
+    */
     this.getDelay = function() {
 		var errorPercentage = 20;
-	    var to = delay + delay/errorPercentage;
-	    var from = delay - delay/errorPercentage;
+	    var lowerbound = delay * (1 - errorPercentage/100);
+	    var range = delay * (2 * errorPercentage/100);
 		if (delay != 0) {
-				return delay + Math.floor(Math.random() * (to - from + 1) + from);
+				return lowerbound + Math.floor(Math.random() * range);
 		}
 		else 
 				return 0
