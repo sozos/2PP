@@ -59,25 +59,33 @@ function PongServer() {
 			// Move ball
 			ball.moveOneStep(p1.paddle, p2.paddle);
 
+			// Temporarily hold the current game state
+			var tempBallx = ball.x;
+			var tempBally = ball.y;
+			var tempp1Paddlex = p1.paddle.x;
+			var tempp1Paddley = p1.paddle.y;
+			var tempp2Paddlex = p2.paddle.x;
+			var tempp2Paddley = p2.paddle.y;
+
 			// Update on player side
 			setTimeout(function() {
 				io.sockets.socket(p1.sid).emit('update', {
-					ballX: ball.x,
-					ballY: ball.y,
-					myPaddleX: p1.paddle.x,
-					myPaddleY: p1.paddle.y,
-					opponentPaddleX: p2.paddle.x,
-					opponentPaddleY: p2.paddle.y});
+					ballX: tempBallx,
+					ballY: tempBally,
+					myPaddleX: tempp1Paddlex,
+					myPaddleY: tempp1Paddley,
+					opponentPaddleX: tempp2Paddlex,
+					opponentPaddleY: tempp2Paddley});
 					},
 					p1.getDelay());
 			setTimeout(function() {
 				io.sockets.socket(p2.sid).emit('update', {
-					ballX: ball.x,
-					ballY: ball.y,
-					myPaddleX: p2.paddle.x,
-					myPaddleY: p2.paddle.y,
-					opponentPaddleX: p1.paddle.x,
-					opponentPaddleY: p1.paddle.y});
+					ballX: tempBallx,
+					ballY: tempBally,
+					myPaddleX: tempp2Paddlex,
+					myPaddleY: tempp2Paddley,
+					opponentPaddleX: tempp1Paddlex,
+					opponentPaddleY: tempp1Paddley});
 					},
 					p2.getDelay());
 		} else {
